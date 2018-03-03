@@ -18,8 +18,12 @@
 			<ul id="musiclist">
 				<?php 
 				$path = "songs";
-			foreach (glob($path."/*.mp3",GLOB_NOESCAPE) as $filename) {
-				echo "<li class=\"mp3item\"><a href=\"$filename\">" . basename($filename) . " </a></li>";
+			foreach (glob($path."/*.mp3") as $music_file) {
+				echo "<li class=\"mp3item\"><a href=\"$music_file\">" . basename($music_file) . " </a></li>";
+			}
+
+			foreach (glob($path."/*.txt") as $playlist) {
+				echo "<li class=\"playlistitem\"><a href=\"$playlist\">" . basename($playlist) . " </a></li>";
 			}
 			 ?>
 			</ul>
