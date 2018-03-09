@@ -17,14 +17,23 @@
 		<div id="listarea">
 			<ul id="musiclist">
 				<?php 
-				$path = "songs";
-			foreach (glob($path."/*.mp3") as $music_file) {
-				echo "<li class=\"mp3item\"><a href=\"$music_file\">" . basename($music_file) . " </a></li>";
-			}
 
-			foreach (glob($path."/*.txt") as $playlist) {
-				echo "<li class=\"playlistitem\"><a href=\"$playlist\">" . basename($playlist) . " </a></li>";
-			}
+				if(isset($_REQUEST["playlist"])){
+					$list_of_music = explode("\n", file_get_contents("songs/".$_REQUEST["playlist"]));
+					foreach ($list_of_music as $key => $value) {
+						echo "<li class=\"playlistitem\"><a href=\"songs/$value\">".basename($value)."</a></li>";
+					}
+				}else{
+						$path = "songs";
+					foreach (glob($path."/*.mp3") as $music_file) {
+						echo "<li class=\"mp3item\"><a href=\"$music_file\">" . basename($music_file) . " </a></li>";
+					}
+					
+					foreach (glob($path."/*.txt") as $playlist) {
+						echo "<li class=\"playlistitem\"><a href=\"music.php?playlist=".basename($playlist)."\">" .basename($playlist). "</a></li>";
+					}
+				}
+
 			 ?>
 			</ul>
 			
