@@ -16,27 +16,25 @@
 
 		<div id="listarea">
 			<ul id="musiclist">
-				<?php 
 
-				if(isset($_REQUEST["playlist"])){
+				<?php if(isset($_REQUEST["playlist"])){
 					$list_of_music = explode("\n", file_get_contents("songs/".$_REQUEST["playlist"]));
-					foreach ($list_of_music as $key => $value) {
-						echo "<li class=\"playlistitem\"><a href=\"songs/$value\">".basename($value)."</a></li>";
-					}
-				}else{
+					foreach ($list_of_music as $key => $value) { ?>
+						<li class="playlistitem"><a href="songs/<?=$value?>"><?= basename($value)?></a></li>
+				<?php	}
+				 }else{
 						$path = "songs";
-					foreach (glob($path."/*.mp3") as $music_file) {
-						echo "<li class=\"mp3item\"><a href=\"$music_file\">" . basename($music_file) . " </a></li>";
-					}
+					foreach (glob($path."/*.mp3") as $music_file) {?>
+						 <li class="mp3item"><a href="<?= $music_file ?>"><?= basename($music_file) ?></a> - <?= round(filesize($music_file)/1024, 2) ?> kb </li>
+					<?php } ?>
 					
-					foreach (glob($path."/*.txt") as $playlist) {
-						echo "<li class=\"playlistitem\"><a href=\"music.php?playlist=".basename($playlist)."\">" .basename($playlist). "</a></li>";
-					}
-				}
-
-			 ?>
+					<?php foreach (glob($path."/*.txt") as $playlist) { ?>
+						<li class="playlistitem"><a href="music.php?playlist=<?= basename($playlist) ?>"> <?= basename($playlist)?> </a> - <?= round(filesize($playlist)/1024, 2) ?> kb</li>
+			<?php }
+				} ?>
 			</ul>
-			
+		
+				
 		</div>
 	</body>
 </html>
